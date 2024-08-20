@@ -1,6 +1,3 @@
-import { Button, Empty, Table } from "antd";
-import { useState } from "react";
-
 export const shipmentColumns = [
   {
     title: "Número de remesa",
@@ -11,9 +8,10 @@ export const shipmentColumns = [
     title: "Data de envio",
     dataIndex: "shipmentDate",
     key: "shipmentDate",
+    render: (date: Date) => (date as Date).toDateString(),
   },
   {
-    title: "Ùltima atualização",
+    title: "Última atualização",
     dataIndex: "lastUpdate",
     key: "lastUpdate",
   },

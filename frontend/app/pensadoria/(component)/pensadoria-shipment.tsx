@@ -2,13 +2,12 @@
 
 import { Card, Button, Divider, Image, Typography } from "antd";
 import { useState } from "react";
-import { ShipmentManage } from "./shipment-manage";
+import { ShipmentManage } from "./pensadoria-shipment-manage";
 
 export function Shipment(): JSX.Element {
   const [openManage, setOpenManage] = useState(false);
   return (
     <div className="mx-20 my-10 p-4">
-      <div className="flex justify-between items-start mb-4"></div>
       <img src="/logo.png" className="h-10" />
       <Divider />
       {!openManage ? (
