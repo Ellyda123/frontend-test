@@ -1,4 +1,4 @@
-import { Button, Input, Select } from "antd";
+import { Button, Input } from "antd";
 import { useState } from "react";
 
 const listItems = [
@@ -28,30 +28,18 @@ export function CreateShipment(): JSX.Element {
     setItemAdded(itemAdded.filter((i) => i !== item));
   };
 
-  const send = () => {
-    console.log("Itens para enviar:", itemAdded);
-  };
   return (
     <div className="flex flex-col justify-between">
       <div>
-        <Button type="text" onChange={(e) => setReturnPage(e.target.value)}>
-          Voltar
-        </Button>
+        <Button type="text">Voltar</Button>
       </div>
-
-      <input
-        list="item-options"
-        className=" border p-2 mb-4"
-        value={selectedItem || ""}
-        onChange={(e) => setSelectedItem(e.target.value)}
-      />
-      <datalist id="item-options">
-        {listItems.map((item, index) => (
-          <option key={index} value={item} />
-        ))}
-      </datalist>
-
-      <div className="flex justify-end items-center">
+      <div className="flex justify-between">
+        <Input
+          list="item-options"
+          className=" border p-2 mb-4"
+          value={selectedItem || ""}
+          onChange={(e) => setSelectedItem(e.target.value)}
+        />
         <Button
           type="primary"
           onClick={addItems}
@@ -61,6 +49,12 @@ export function CreateShipment(): JSX.Element {
           Adicionar
         </Button>
       </div>
+
+      <datalist id="item-options">
+        {listItems.map((item, index) => (
+          <option key={index} value={item} />
+        ))}
+      </datalist>
 
       <ul className="mt-4">
         {itemAdded.map((item) => (
