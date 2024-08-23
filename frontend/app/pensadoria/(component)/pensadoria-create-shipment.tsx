@@ -11,11 +11,16 @@ const listItems = [
   "Pulseira - Masculina",
   "Pulseira - Feminina",
 ];
-
-export function CreateShipment(): JSX.Element {
+interface CreateShipmentProps {
+  onCancel: () => void;
+  onSubmit: () => void;
+}
+export function CreateShipment({
+  onCancel,
+  onSubmit,
+}: CreateShipmentProps): JSX.Element {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [itemAdded, setItemAdded] = useState<string[]>([]);
-  const [returnPage, setReturnPage] = useState(true);
 
   const addItems = () => {
     if (selectedItem && !itemAdded.includes(selectedItem)) {
@@ -31,7 +36,9 @@ export function CreateShipment(): JSX.Element {
   return (
     <div className="flex flex-col justify-between">
       <div>
-        <Button type="text">Voltar</Button>
+        <Button type="text" onClick={onCancel}>
+          Voltar
+        </Button>
       </div>
       <div className="flex justify-between">
         <Input
@@ -60,18 +67,16 @@ export function CreateShipment(): JSX.Element {
         {itemAdded.map((item) => (
           <li key={item} className="flex items-center justify-between mb-2">
             <span>{item}</span>
-            <Button
-              type="text"
-              className="text-red-800 border-red-800"
-              onClick={() => removeItem(item)}
-            >
+            <Button type="text" onClick={() => removeItem(item)}>
               Remover
             </Button>
           </li>
         ))}
       </ul>
       <div className=" flex justify-end">
-        <Button type="primary">Criar envio</Button>
+        <Button type="primary" onClick={onSubmit}>
+          Criar envio
+        </Button>
       </div>
     </div>
   );

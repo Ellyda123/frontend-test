@@ -2,11 +2,20 @@
 
 import { Button, Table } from "antd";
 import { shipmentColumns } from "./pensadoria-shipment-column";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateShipment } from "./pensadoria-create-shipment";
 
 export function ShipmentManage(): JSX.Element {
   const [createShipment, setCreateShipment] = useState(false);
+  const [shipmentSubmitted, setShipmentSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (shipmentSubmitted) {
+      setCreateShipment(false);
+      setShipmentSubmitted(false);
+    }
+  }, [shipmentSubmitted]);
+
   return (
     <div className="p-8">
       <div className="flex flex-col justify-between mb-4">
@@ -25,7 +34,14 @@ export function ShipmentManage(): JSX.Element {
             <Table columns={shipmentColumns} />
           </>
         ) : (
-          <CreateShipment />
+          <CreateShipment
+            onCancel={() => {
+              setCreateShipment(false);
+            }}
+            onSubmit={() => {
+              setShipmentSubmitted(true);
+            }}
+          />
         )}
       </div>
     </div>

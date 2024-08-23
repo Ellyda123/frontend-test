@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Button, Divider, Image, Typography } from "antd";
+import { Card, Button, Divider, Typography } from "antd";
 import { useState } from "react";
 import { ShipmentManage } from "./pensadoria-shipment-manage";
 
