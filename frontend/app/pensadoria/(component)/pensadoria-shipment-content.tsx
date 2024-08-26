@@ -5,9 +5,12 @@ import { shipmentColumns } from "./pensadoria-shipment-column";
 import { useEffect, useState } from "react";
 import { CreateShipment } from "./pensadoria-create-shipment";
 
-export function ShipmentManage(): JSX.Element {
+export function PensadoriaShipmentContent(): JSX.Element {
   const [createShipment, setCreateShipment] = useState(false);
   const [shipmentSubmitted, setShipmentSubmitted] = useState(false);
+  const [shipments, setShipments] = useState<
+    { number: string; items: string[] }[]
+  >([]);
 
   useEffect(() => {
     if (shipmentSubmitted) {

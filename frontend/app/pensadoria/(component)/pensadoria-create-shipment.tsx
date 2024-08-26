@@ -1,19 +1,18 @@
 import { Button, Input } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const listItems = [
-  "Boné - Masculino",
-  "Boné - Feminino",
-  "Óculos de sol - Masculino",
-  "Óculos de sol - Feminino",
-  "Relógio - Masculino",
-  "Relógio - Feminino",
-  "Pulseira - Masculina",
-  "Pulseira - Feminina",
-];
+async function fetchProducts() {
+  return [
+    { id: "1", name: "Boné - Masculino " },
+    { id: "2", name: "Boné - Feminino" },
+    { id: "3", name: "Óculos de sol - Masculino" },
+    { id: "4", name: "Óculos de sol - Feminino " },
+  ];
+}
+
 interface CreateShipmentProps {
   onCancel: () => void;
-  onSubmit: () => void;
+  onSubmit: (items: string[]) => void;
 }
 export function CreateShipment({
   onCancel,
@@ -21,16 +20,26 @@ export function CreateShipment({
 }: CreateShipmentProps): JSX.Element {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [itemAdded, setItemAdded] = useState<string[]>([]);
+  const [products, setProducts] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    fetchProducts().then(setProducts).catch(console.error);
+  }, []);
 
   const addItems = () => {
     if (selectedItem && !itemAdded.includes(selectedItem)) {
       setItemAdded([...itemAdded, selectedItem]);
-      setSelectedItem("");
+      setSelectedItem(null);
     }
   };
 
   const removeItem = (item: string) => {
     setItemAdded(itemAdded.filter((i) => i !== item));
+  };
+
+  const handleSubmit = () => {
+    onSubmit(itemAdded);
+    setItemAdded([]);
   };
 
   return (
@@ -58,8 +67,8 @@ export function CreateShipment({
       </div>
 
       <datalist id="item-options">
-        {listItems.map((item, index) => (
-          <option key={index} value={item} />
+        {products.map((products) => (
+          <option key={products.id} value={products.name} />
         ))}
       </datalist>
 
@@ -74,7 +83,11 @@ export function CreateShipment({
         ))}
       </ul>
       <div className=" flex justify-end">
-        <Button type="primary" onClick={onSubmit}>
+        <Button
+          type="primary"
+          onClick={handleSubmit}
+          disabled={itemAdded.length === 0}
+        >
           Criar envio
         </Button>
       </div>

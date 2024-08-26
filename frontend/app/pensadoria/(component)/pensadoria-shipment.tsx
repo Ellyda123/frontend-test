@@ -2,7 +2,7 @@
 
 import { Card, Button, Divider, Typography } from "antd";
 import { useState } from "react";
-import { ShipmentManage } from "./pensadoria-shipment-manage";
+import { PensadoriaShipmentContent } from "./pensadoria-shipment-content";
 
 export function Shipment(): JSX.Element {
   const [openManage, setOpenManage] = useState(false);
@@ -23,7 +23,7 @@ export function Shipment(): JSX.Element {
           </Button>
         </Card>
       ) : (
-        <ShipmentManage />
+        <PensadoriaShipmentContent />
       )}
     </div>
   );

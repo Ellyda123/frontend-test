@@ -1,3 +1,4 @@
+import { ShipmentStatus } from "@/types/shipments";
 import { Button } from "antd";
 
 export const shipmentColumns = [
@@ -23,14 +24,20 @@ export const shipmentColumns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
+    render: (status: ShipmentStatus) => {
+      switch (status as ShipmentStatus) {
+        case ShipmentStatus.SEND:
+          return "Enviado";
+      }
+    },
   },
   {
     title: "Ações",
     key: "actions",
-    render: (_, record: unknown) => (
+    render: (_, record: unknown) => {
       <Button type="primary" onClick={() => record}>
         Visualizar
-      </Button>
-    ),
+      </Button>;
+    },
   },
 ];
