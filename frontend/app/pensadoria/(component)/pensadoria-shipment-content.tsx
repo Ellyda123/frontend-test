@@ -3,14 +3,11 @@
 import { Button, Table } from "antd";
 import { shipmentColumns } from "./pensadoria-shipment-column";
 import { useEffect, useState } from "react";
-import { CreateShipment } from "./pensadoria-create-shipment";
+import { PensadoriaCreateShipment } from "./pensadoria-create-shipment";
 
 export function PensadoriaShipmentContent(): JSX.Element {
   const [createShipment, setCreateShipment] = useState(false);
   const [shipmentSubmitted, setShipmentSubmitted] = useState(false);
-  const [shipments, setShipments] = useState<
-    { number: string; items: string[] }[]
-  >([]);
 
   useEffect(() => {
     if (shipmentSubmitted) {
@@ -37,7 +34,7 @@ export function PensadoriaShipmentContent(): JSX.Element {
             <Table columns={shipmentColumns} />
           </>
         ) : (
-          <CreateShipment
+          <PensadoriaCreateShipment
             onCancel={() => {
               setCreateShipment(false);
             }}

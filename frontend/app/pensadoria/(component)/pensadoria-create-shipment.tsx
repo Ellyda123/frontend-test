@@ -1,30 +1,40 @@
-import { Button, Input } from "antd";
+"use client";
+
+import { getProducts, getShipment } from "@/actions";
+import { Product, Shipment } from "@/types/shipments";
+import { Button, Select } from "antd";
 import { useEffect, useState } from "react";
 
-async function fetchProducts() {
-  return [
-    { id: "1", name: "Boné - Masculino " },
-    { id: "2", name: "Boné - Feminino" },
-    { id: "3", name: "Óculos de sol - Masculino" },
-    { id: "4", name: "Óculos de sol - Feminino " },
-  ];
-}
+const { Option } = Select;
 
-interface CreateShipmentProps {
+interface PensadoriaCreateShipmentProps {
   onCancel: () => void;
   onSubmit: (items: string[]) => void;
 }
-export function CreateShipment({
+
+export function PensadoriaCreateShipment({
   onCancel,
   onSubmit,
-}: CreateShipmentProps): JSX.Element {
+}: PensadoriaCreateShipmentProps): JSX.Element {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [itemAdded, setItemAdded] = useState<string[]>([]);
-  const [products, setProducts] = useState<{ id: string; name: string }[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [shipment, setShipment] = useState<Shipment[]>([]);
 
   useEffect(() => {
-    fetchProducts().then(setProducts).catch(console.error);
+    getProducts()
+      .then((data: Product[]) => {
+        setProducts(data);
+        console.log("Produtos carregados:", data);
+      })
+      .catch((error: any) =>
+        console.error("Erro ao carregar produtos:", error)
+      );
   }, []);
+
+  const handleChange = (value: string) => {
+    setSelectedItem(value);
+  };
 
   const addItems = () => {
     if (selectedItem && !itemAdded.includes(selectedItem)) {
@@ -40,6 +50,12 @@ export function CreateShipment({
   const handleSubmit = () => {
     onSubmit(itemAdded);
     setItemAdded([]);
+    getShipment()
+      .then((data: Shipment[]) => {
+        setShipment(data);
+        console.log("produtos enviados", data);
+      })
+      .catch((error: any) => console.error("erro ao enviar produto:", error));
   };
 
   return (
@@ -50,12 +66,17 @@ export function CreateShipment({
         </Button>
       </div>
       <div className="flex justify-between">
-        <Input
-          list="item-options"
-          className=" border p-2 mb-4"
-          value={selectedItem || ""}
-          onChange={(e) => setSelectedItem(e.target.value)}
-        />
+        <Select
+          placeholder="Selecione um produto"
+          style={{ width: "100%" }}
+          onChange={handleChange}
+        >
+          {products.map((product) => (
+            <Option key={product.id} value={product.id}>
+              {product.name}
+            </Option>
+          ))}
+        </Select>
         <Button
           type="primary"
           onClick={addItems}
@@ -66,23 +87,24 @@ export function CreateShipment({
         </Button>
       </div>
 
-      <datalist id="item-options">
-        {products.map((products) => (
-          <option key={products.id} value={products.name} />
-        ))}
-      </datalist>
-
       <ul className="mt-4">
-        {itemAdded.map((item) => (
-          <li key={item} className="flex items-center justify-between mb-2">
-            <span>{item}</span>
-            <Button type="text" onClick={() => removeItem(item)}>
-              Remover
-            </Button>
-          </li>
-        ))}
+        {itemAdded.map((productId) => {
+          const product = products.find((p) => p.id === productId);
+          return (
+            <li
+              key={productId}
+              className="flex items-center justify-between mb-2"
+            >
+              <span>{product?.name}</span>
+              <Button type="text" onClick={() => removeItem(productId)}>
+                Remover
+              </Button>
+            </li>
+          );
+        })}
       </ul>
-      <div className=" flex justify-end">
+
+      <div className="flex justify-end">
         <Button
           type="primary"
           onClick={handleSubmit}
