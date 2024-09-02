@@ -30,6 +30,13 @@ export function PensadoriaCreateShipment({
       .catch((error: any) =>
         console.error("Erro ao carregar produtos:", error)
       );
+    getShipment()
+      .then((data: Shipment[]) => {
+        return setShipment(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar remessa:", error);
+      });
   }, []);
 
   const handleChange = (value: string) => {
@@ -50,12 +57,6 @@ export function PensadoriaCreateShipment({
   const handleSubmit = () => {
     onSubmit(itemAdded);
     setItemAdded([]);
-    getShipment()
-      .then((data: Shipment[]) => {
-        setShipment(data);
-        console.log("produtos enviados", data);
-      })
-      .catch((error: any) => console.error("erro ao enviar produto:", error));
   };
 
   return (

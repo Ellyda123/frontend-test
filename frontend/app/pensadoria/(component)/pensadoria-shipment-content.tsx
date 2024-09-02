@@ -6,16 +6,13 @@ import { useEffect, useState } from "react";
 import { PensadoriaCreateShipment } from "./pensadoria-create-shipment";
 
 export function PensadoriaShipmentContent(): JSX.Element {
+  const [shipments, setShipments] = useState([]);
   const [createShipment, setCreateShipment] = useState(false);
-  const [shipmentSubmitted, setShipmentSubmitted] = useState(false);
 
-  useEffect(() => {
-    if (shipmentSubmitted) {
-      setCreateShipment(false);
-      setShipmentSubmitted(false);
-    }
-  }, [shipmentSubmitted]);
-
+  const handleCreateShipment = (newShipment: any) => {
+    setShipments([...shipments, newShipment]);
+    setCreateShipment(false);
+  };
   return (
     <div className="p-8">
       <div className="flex flex-col justify-between mb-4">
@@ -31,16 +28,14 @@ export function PensadoriaShipmentContent(): JSX.Element {
                 Criar envio
               </Button>
             </div>
-            <Table columns={shipmentColumns} />
+            <Table columns={shipmentColumns} dataSource={shipments} />
           </>
         ) : (
           <PensadoriaCreateShipment
             onCancel={() => {
-              setCreateShipment(false);
+              setCreateShipment(true);
             }}
-            onSubmit={() => {
-              setShipmentSubmitted(true);
-            }}
+            onSubmit={handleCreateShipment}
           />
         )}
       </div>

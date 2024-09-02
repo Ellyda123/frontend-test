@@ -11,11 +11,17 @@ export async function getProducts() {
 }
 
 export async function getShipment() {
-  return (
-    await fetch("http://localhost:4000/shipments", {
-      next: {
-        tags: ["shipments"],
-      },
+  fetch("http://localhost:4000/shipments/:id")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
     })
-  ).json();
+    .then((data) => {
+      console.log("Número de remessa:", data.shipmentNumber);
+    })
+    .catch((error) => {
+      console.error("Houve um problema com a requisição:", error);
+    });
 }

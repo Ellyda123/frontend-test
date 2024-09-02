@@ -1,24 +1,25 @@
 import { ShipmentStatus } from "@/types/shipments";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
 
 export const shipmentColumns = [
   {
     title: "Número de remesa",
     dataIndex: "shipmentNumber",
     key: "shipmentNumber",
-    render: (shipmentNumber: string) => `REM-${shipmentNumber}`,
   },
   {
     title: "Data de envio",
     dataIndex: "shipmentDate",
     key: "shipmentDate",
-    render: (date: Date) => (date as Date).toISOString(),
+    render: (date: Date) => dayjs(date as Date).format("DD/MM/YYYY"),
   },
   {
     title: "Última atualização",
     dataIndex: "lastUpdate",
     key: "lastUpdate",
-    render: (lastUpdate: Date) => new Date(lastUpdate).toLocaleString(),
+    render: (date: Date) => dayjs(date as Date).format("DD/MM/YYYY"),
   },
   {
     title: "Status",
@@ -35,7 +36,12 @@ export const shipmentColumns = [
     title: "Ações",
     key: "actions",
     render: (_, record: unknown) => {
-      <Button type="primary" onClick={() => record}>
+      <Button
+        type="primary"
+        onClick={() => {
+          true;
+        }}
+      >
         Visualizar
       </Button>;
     },
