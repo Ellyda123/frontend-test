@@ -2,7 +2,7 @@
 
 import { Button, Table } from "antd";
 import { shipmentColumns } from "./pensadoria-shipment-column";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PensadoriaCreateShipment } from "./pensadoria-create-shipment";
 
 export function PensadoriaShipmentContent(): JSX.Element {

@@ -29,6 +29,12 @@ export const shipmentColumns = [
       switch (status as ShipmentStatus) {
         case ShipmentStatus.SEND:
           return "Enviado";
+        case ShipmentStatus.PENDING:
+          return "Pendente";
+        case ShipmentStatus.DELIVEREDEN:
+          return "Entregue";
+        default:
+          return "Enviado";
       }
     },
   },

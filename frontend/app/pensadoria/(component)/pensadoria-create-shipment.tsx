@@ -30,13 +30,6 @@ export function PensadoriaCreateShipment({
       .catch((error: any) =>
         console.error("Erro ao carregar produtos:", error)
       );
-    getShipment()
-      .then((data: Shipment[]) => {
-        return setShipment(data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar remessa:", error);
-      });
   }, []);
 
   const handleChange = (value: string) => {
@@ -73,9 +66,7 @@ export function PensadoriaCreateShipment({
           onChange={handleChange}
         >
           {products.map((product) => (
-            <Option key={product.id} value={product.id}>
-              {product.name}
-            </Option>
+            <Option key={product.id}>{product.name}</Option>
           ))}
         </Select>
         <Button
@@ -93,7 +84,7 @@ export function PensadoriaCreateShipment({
           const product = products.find((p) => p.id === productId);
           return (
             <li
-              key={productId}
+              key={product?.id}
               className="flex items-center justify-between mb-2"
             >
               <span>{product?.name}</span>
