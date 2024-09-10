@@ -1,4 +1,3 @@
-import { Product } from "@/types/shipments";
 import { Product } from "./../../backend/src/types/product";
 
 export async function shipmentProducts(products: Product[]) {
