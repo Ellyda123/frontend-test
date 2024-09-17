@@ -2,7 +2,7 @@ import { Product } from "./product";
 
 export enum ShipmentStatus {
   SEND = "ENVIADO",
-  PENDING = "PENDENTE",
+  CANCELLED = "CANCELLED",
   DELIVEREDEN = "ENTREGUE",
 }
 
@@ -12,7 +12,7 @@ export interface Shipment {
   lastUpdate: Date;
   status: ShipmentStatus;
   shipmentNumber: string;
-  items: ShipmentItem[];
+  products: Product[];
 }
 
 export interface ShipmentItem {

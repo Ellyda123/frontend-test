@@ -1,9 +1,10 @@
 "use client";
 
 import { getProducts, getShipment } from "@/actions";
-import { Product, Shipment } from "@/types/shipments";
+import { Shipment } from "@/types/shipments";
 import { Button, Select } from "antd";
 import { useEffect, useState } from "react";
+import { Product } from "../../../../backend/src/types/product";
 
 const { Option } = Select;
 
@@ -19,7 +20,6 @@ export function PensadoriaCreateShipment({
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [itemAdded, setItemAdded] = useState<string[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [shipment, setShipment] = useState<Shipment[]>([]);
 
   useEffect(() => {
     getProducts()
@@ -66,7 +66,9 @@ export function PensadoriaCreateShipment({
           onChange={handleChange}
         >
           {products.map((product) => (
-            <Option key={product.id}>{product.name}</Option>
+            <Option key={product.id} value={product.id}>
+              {product.name}
+            </Option>
           ))}
         </Select>
         <Button

@@ -1,11 +1,10 @@
-import { ShipmentStatus } from "@/types/shipments";
-import { Button, Modal } from "antd";
+import { Shipment, ShipmentStatus } from "@/types/shipments";
+import { Button } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
 
 export const shipmentColumns = [
   {
-    title: "Número de remesa",
+    title: "Número de remessa",
     dataIndex: "shipmentNumber",
     key: "shipmentNumber",
   },
@@ -13,26 +12,26 @@ export const shipmentColumns = [
     title: "Data de envio",
     dataIndex: "shipmentDate",
     key: "shipmentDate",
-    render: (date: Date) => dayjs(date as Date).format("DD/MM/YYYY"),
+    render: (date: Date) => dayjs(date).format("DD/MM/YYYY"),
   },
   {
     title: "Última atualização",
     dataIndex: "lastUpdate",
     key: "lastUpdate",
-    render: (date: Date) => dayjs(date as Date).format("DD/MM/YYYY"),
+    render: (date: Date) => dayjs(date).format("DD/MM/YYYY"),
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
     render: (status: ShipmentStatus) => {
-      switch (status as ShipmentStatus) {
+      switch (status) {
         case ShipmentStatus.SEND:
           return "Enviado";
-        case ShipmentStatus.PENDING:
-          return "Pendente";
         case ShipmentStatus.DELIVEREDEN:
           return "Entregue";
+        case ShipmentStatus.CANCELLED:
+          return "Cancelado";
         default:
           return "Enviado";
       }
@@ -41,15 +40,14 @@ export const shipmentColumns = [
   {
     title: "Ações",
     key: "actions",
-    render: (_, record: unknown) => {
-      <Button
-        type="primary"
-        onClick={() => {
-          true;
-        }}
-      >
+    render: (_: any, record: Shipment) => (
+      <Button type="primary" onClick={() => onOpenModal(record)}>
         Visualizar
-      </Button>;
-    },
+      </Button>
+    ),
   },
 ];
+
+function onOpenModal(record: Shipment): void {
+  throw new Error("Function not implemented.");
+}
